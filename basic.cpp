@@ -4,6 +4,7 @@ int main()
 {
     // create the window
     sf::RenderWindow window(sf::VideoMode(800, 600), "My window");
+    //sf::RenderWindow window(sf::VideoMode::getFullscreenModes()[0], "My window", sf::Style::Fullscreen);
 	double car_x = window.getSize().x/2;
 	double car_y = window.getSize().y/2;
 
@@ -28,6 +29,10 @@ int main()
 						window.close();
 						break;
 					}
+					if (event.key.code == sf::Keyboard::Space) {
+						car.setPosition(sf::Vector2f(window.getSize().x/2,window.getSize().y/2));
+						break;
+					}
 			}
         }
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
@@ -40,7 +45,7 @@ int main()
 			car.move(sf::Vector2f(0,10));
 
         // clear the window with black color
-        window.clear(sf::Color::Green);
+        window.clear(sf::Color::Black);
 
         // draw everything here...
          window.draw(car);

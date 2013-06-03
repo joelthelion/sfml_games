@@ -7,3 +7,5 @@ target_link_libraries(road ${SFML_LIBRARIES})
 
 add_executable(basic basic.cpp)
 target_link_libraries(basic ${SFML_LIBRARIES})
+add_executable(wrap wrap.cpp)
+target_link_libraries(wrap ${SFML_LIBRARIES})
