@@ -1,13 +1,14 @@
 #include <SFML/Graphics.hpp>
 #include <cmath>
+#include <iostream>
 
 using namespace sf;
 
-float wrap(float x,float y) {
-	if (x < 0)
-		return fmod(x,y) + y;
+float wrap(float x,float max,float margin) {
+	if (x < -margin)
+		return fmod(x,max+margin) + max+margin;
 	else
-		return fmod(x,y);
+		return fmod(x,max+margin);
 }
 
 int main()
@@ -18,8 +19,13 @@ int main()
 	double car_x = window.getSize().x/2;
 	double car_y = window.getSize().y/2;
 
-	RectangleShape car(Vector2f(10,20));
+	//RectangleShape car(Vector2f(10,20));
+	Sprite car;
+	Texture car_t;
+	car_t.loadFromFile("resources/car.png");
+	car.setTexture(car_t);
 	car.setPosition(Vector2f(window.getSize().x/2,window.getSize().y/2));
+	car.setOrigin(16,23.5);
 
     // run the program as long as the window is open
     while (window.isOpen())
@@ -46,20 +52,24 @@ int main()
 			}
         }
 		Vector2f delta;
+		float rotation = 0.f;
 		float speed = 6.f;
+		float angle = car.getRotation()/180*M_PI + M_PI_2;
+		Vector2f increment(speed*cos(angle), speed*sin(angle));
 		if (Keyboard::isKeyPressed(Keyboard::Left))
-			delta = Vector2f(-speed,0);
+			rotation = -4;
 		if (Keyboard::isKeyPressed(Keyboard::Right))
-			delta = Vector2f(speed,0);
+			rotation = 4;
 		if (Keyboard::isKeyPressed(Keyboard::Up))
-			delta = Vector2f(0,-speed);
+			delta = -increment;
 		if (Keyboard::isKeyPressed(Keyboard::Down))
-			delta = Vector2f(0,speed);
-		Vector2f pos(wrap(car.getPosition().x + delta.x,window.getSize().x), wrap(car.getPosition().y+delta.y,window.getSize().y));
+			delta = increment;
+		Vector2f pos(wrap(car.getPosition().x + delta.x,window.getSize().x,80), wrap(car.getPosition().y+delta.y,window.getSize().y,80));
 		car.setPosition(pos);
+		car.rotate(rotation);
 
         // clear the window with black color
-        window.clear(Color::Blue);
+        window.clear(Color::Green);
 
         // draw everything here...
          window.draw(car);
