@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <cmath>
 #include <iostream>
 
@@ -13,6 +14,10 @@ float wrap(float x,float max,float margin) {
 
 int main()
 {
+	Music music;
+	music.openFromFile("resources/mario.ogg");
+	music.play();
+
     // create the window
     RenderWindow window(VideoMode(800, 600), "My window");
     //RenderWindow window(VideoMode::getFullscreenModes()[0], "My window", Style::Fullscreen);
@@ -64,7 +69,7 @@ int main()
 			delta = -increment;
 		if (Keyboard::isKeyPressed(Keyboard::Down))
 			delta = increment;
-		Vector2f pos(wrap(car.getPosition().x + delta.x,window.getSize().x,80), wrap(car.getPosition().y+delta.y,window.getSize().y,80));
+		Vector2f pos(wrap(car.getPosition().x + delta.x,window.getSize().x,200), wrap(car.getPosition().y+delta.y,window.getSize().y,200));
 		car.setPosition(pos);
 		car.rotate(rotation);
 
