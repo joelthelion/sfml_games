@@ -20,8 +20,6 @@ class SpriteLoader {
 					//std::cout << it->path().generic_string() << std::endl;
 					text->loadFromFile(it->path().generic_string());
 					textures.push_back(text);
-					Sprite* sprite = new Sprite(*text);
-					sprites.push_back(sprite);
 				}
 			}
 		}
@@ -29,33 +27,40 @@ class SpriteLoader {
 			for (auto it: textures) {
 				delete it;
 			}
-			for (auto it: sprites) {
-				delete it;
-			}
 		}
-		Sprite& getRandomSprite() {
-			return *sprites[rand()%sprites.size()];
+		Sprite getRandomSprite() {
+			return Sprite(*textures[rand()%textures.size()]);
 		}
-		std::vector<sf::Sprite*> getRandomSprites(unsigned int n) {
-			assert(n<=sprites.size());
-			std::random_shuffle(sprites.begin(),sprites.end());
-			return std::vector<sf::Sprite*>(sprites.begin(),sprites.begin()+n);
+		std::vector<sf::Sprite> getRandomSprites(unsigned int n) {
+			assert(n<=textures.size());
+			std::vector<sf::Sprite> output;
+			output.resize(n);
+			std::random_shuffle(textures.begin(),textures.end());
+			for (unsigned int i = 0; i<n; ++i)
+				output[i].setTexture(*(textures[i]));
+			return output;
+		}
+		std::vector<sf::Sprite> getRandomSpriteNTimes(unsigned int n) {
+			Texture& text = *(textures[rand()%textures.size()]);
+			std::vector<sf::Sprite> output;
+			output.resize(n);
+			for (auto& s: output) s.setTexture(text);
+			return output;
 		}
 
 	protected:
-		std::vector<sf::Sprite*> sprites;
 		std::vector<sf::Texture*> textures;
 };
 
-void RandomlyPlaceSprites(sf::Window& window,std::vector<sf::Sprite*>& sprites) {
+void RandomlyPlaceSprites(sf::Window& window,std::vector<sf::Sprite>& sprites) {
 	const int width = window.getSize().x;
 	const int height = window.getSize().y;
 	restart:
 	for (auto it = sprites.begin(); it != sprites.end();++it) {
-		(*it)->setPosition(rand()%(int)(width - (*it)->getLocalBounds().width),
-				rand()%(int)(height - (*it)->getLocalBounds().height));
+		it->setPosition(rand()%(int)(width - it->getLocalBounds().width),
+				rand()%(int)(height - it->getLocalBounds().height));
 		for (auto other = sprites.begin(); other != it; ++other) {
-			if ((*it)->getGlobalBounds().intersects((*other)->getGlobalBounds())) {
+			if (it->getGlobalBounds().intersects(other->getGlobalBounds())) {
 				goto restart;
 			}
 		}
@@ -64,6 +69,7 @@ void RandomlyPlaceSprites(sf::Window& window,std::vector<sf::Sprite*>& sprites) 
 
 int main()
 {
+	const int MAX_N = 4;
 	SpriteLoader sprites;
 	Music music;
 	music.openFromFile("resources/mario.ogg");
@@ -75,7 +81,7 @@ int main()
     RenderWindow window(VideoMode::getFullscreenModes()[0], "My window", Style::Fullscreen);
 
 	//RectangleShape car(Vector2f(10,20));
-	std::vector<sf::Sprite*> images = sprites.getRandomSprites(8);
+	std::vector<sf::Sprite> images = sprites.getRandomSpriteNTimes(rand()%(MAX_N)+1);
 	RandomlyPlaceSprites(window,images);
 	//Sprite &car = sprites.getRandomSprite();
 
@@ -99,7 +105,7 @@ int main()
 						break;
 					}
 					if (event.key.code == Keyboard::Space) {
-						images = sprites.getRandomSprites(8);
+						images = sprites.getRandomSpriteNTimes(rand()%(MAX_N)+1);
 						RandomlyPlaceSprites(window,images);
 						break;
 					}
@@ -113,7 +119,7 @@ int main()
 
         // draw everything here...
 		for (auto image:images) {
-         window.draw(*image);
+         window.draw(image);
 		}
 
         // end the current frame
