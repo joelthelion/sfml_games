@@ -1,2 +1,2 @@
 all:
-	cd build && make count
+	cd build && make

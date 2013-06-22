@@ -16,13 +16,15 @@ int main()
 {
 	Music music;
 	music.openFromFile("resources/mario.ogg");
+	music.setLoop(true);
 	music.play();
 
     // create the window
     RenderWindow window(VideoMode(800, 600), "My window");
     //RenderWindow window(VideoMode::getFullscreenModes()[0], "My window", Style::Fullscreen);
-	double car_x = window.getSize().x/2;
-	double car_y = window.getSize().y/2;
+	window.setFramerateLimit(60);
+	window.setVerticalSyncEnabled(true);
+	window.setMouseCursorVisible(false);
 
 	//RectangleShape car(Vector2f(10,20));
 	Sprite car;
@@ -31,6 +33,7 @@ int main()
 	car.setTexture(car_t);
 	car.setPosition(Vector2f(window.getSize().x/2,window.getSize().y/2));
 	car.setOrigin(16,23.5);
+	sf::Clock clock;
 
     // run the program as long as the window is open
     while (window.isOpen())
@@ -54,11 +57,15 @@ int main()
 						car.setPosition(Vector2f(window.getSize().x/2,window.getSize().y/2));
 						break;
 					}
+				default: break;
 			}
         }
+
+		sf::Time elapsed = clock.restart();
+		//std::cout << elapsed.asMicroseconds()	<< std::endl;
 		Vector2f delta;
 		float rotation = 0.f;
-		float speed = 6.f;
+		float speed = 0.0005f * elapsed.asMicroseconds();
 		float angle = car.getRotation()/180*M_PI + M_PI_2;
 		Vector2f increment(speed*cos(angle), speed*sin(angle));
 		if (Keyboard::isKeyPressed(Keyboard::Left))

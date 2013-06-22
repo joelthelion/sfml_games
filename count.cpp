@@ -55,12 +55,14 @@ class SpriteLoader {
 void RandomlyPlaceSprites(sf::Window& window,std::vector<sf::Sprite>& sprites) {
 	const int width = window.getSize().x;
 	const int height = window.getSize().y;
+	unsigned int tries = 0;
 	restart:
 	for (auto it = sprites.begin(); it != sprites.end();++it) {
 		it->setPosition(rand()%(int)(width - it->getLocalBounds().width),
 				rand()%(int)(height - it->getLocalBounds().height));
 		for (auto other = sprites.begin(); other != it; ++other) {
-			if (it->getGlobalBounds().intersects(other->getGlobalBounds())) {
+			if (tries < 1e5 && it->getGlobalBounds().intersects(other->getGlobalBounds())) {
+				tries++;
 				goto restart;
 			}
 		}
@@ -69,22 +71,21 @@ void RandomlyPlaceSprites(sf::Window& window,std::vector<sf::Sprite>& sprites) {
 
 int main()
 {
-	const int MAX_N = 4;
+	const int MAX_N = 3;
 	SpriteLoader sprites;
 	Music music;
 	music.openFromFile("resources/mario.ogg");
+	music.setLoop(true);
 	music.play();
 	boost::filesystem::directory_iterator it;
 
     // create the window
     //RenderWindow window(VideoMode(800, 600), "My window");
     RenderWindow window(VideoMode::getFullscreenModes()[0], "My window", Style::Fullscreen);
+	window.setMouseCursorVisible(false);
 
-	//RectangleShape car(Vector2f(10,20));
 	std::vector<sf::Sprite> images = sprites.getRandomSpriteNTimes(rand()%(MAX_N)+1);
 	RandomlyPlaceSprites(window,images);
-	//Sprite &car = sprites.getRandomSprite();
-
 
     // run the program as long as the window is open
     while (window.isOpen())
