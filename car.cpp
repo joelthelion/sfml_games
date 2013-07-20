@@ -76,13 +76,14 @@ int main()
 		//std::cout << elapsed.asMicroseconds()	<< std::endl;
 		Vector2f delta;
 		float rotation = 0.f;
-		float speed = 1.5e-4f * elapsed.asMicroseconds();
+		float rotation_speed = 2.f;
+		float speed = 0.5e-4f * elapsed.asMicroseconds();
 		float angle = car.getRotation()/180*M_PI + M_PI_2;
 		Vector2f increment(speed*cos(angle), speed*sin(angle));
 		if (Keyboard::isKeyPressed(Keyboard::Left))
-			rotation = -4;
+			rotation = -rotation_speed;
 		if (Keyboard::isKeyPressed(Keyboard::Right))
-			rotation = 4;
+			rotation = rotation_speed;
 		//if (Keyboard::isKeyPressed(Keyboard::Up))
 			//driving = not driving;
 		if (Keyboard::isKeyPressed(Keyboard::Down))
@@ -92,8 +93,8 @@ int main()
 			delta = -increment;
 			Vector2f pos(wrap(car.getPosition().x + delta.x,window.getSize().x,200), wrap(car.getPosition().y+delta.y,window.getSize().y,200));
 			car.setPosition(pos);
-			car.rotate(rotation);
 		}
+		car.rotate(rotation);
 
         // clear the window with black color
         window.clear(Color::Green);
