@@ -71,7 +71,7 @@ void RandomlyPlaceSprites(sf::Window& window,std::vector<sf::Sprite>& sprites) {
 
 int main()
 {
-	const int MAX_N = 3;
+	const int MAX_N = 4;
 	SpriteLoader sprites;
 	Music music;
 	music.openFromFile("resources/mario.ogg");

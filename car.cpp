@@ -20,8 +20,8 @@ int main()
 	music.play();
 
     // create the window
-    RenderWindow window(VideoMode(800, 600), "My window");
-    //RenderWindow window(VideoMode::getFullscreenModes()[0], "My window", Style::Fullscreen);
+    //RenderWindow window(VideoMode(800, 600), "My window");
+    RenderWindow window(VideoMode::getFullscreenModes()[0], "My window", Style::Fullscreen);
 	window.setFramerateLimit(60);
 	window.setVerticalSyncEnabled(true);
 	window.setMouseCursorVisible(false);
@@ -34,6 +34,7 @@ int main()
 	car.setPosition(Vector2f(window.getSize().x/2,window.getSize().y/2));
 	car.setOrigin(16,23.5);
 	sf::Clock clock;
+	bool driving = false;
 
     // run the program as long as the window is open
     while (window.isOpen())
@@ -65,7 +66,7 @@ int main()
 		//std::cout << elapsed.asMicroseconds()	<< std::endl;
 		Vector2f delta;
 		float rotation = 0.f;
-		float speed = 0.0005f * elapsed.asMicroseconds();
+		float speed = 0.0002f * elapsed.asMicroseconds();
 		float angle = car.getRotation()/180*M_PI + M_PI_2;
 		Vector2f increment(speed*cos(angle), speed*sin(angle));
 		if (Keyboard::isKeyPressed(Keyboard::Left))
@@ -73,12 +74,16 @@ int main()
 		if (Keyboard::isKeyPressed(Keyboard::Right))
 			rotation = 4;
 		if (Keyboard::isKeyPressed(Keyboard::Up))
-			delta = -increment;
+			driving = true;
 		if (Keyboard::isKeyPressed(Keyboard::Down))
-			delta = increment;
-		Vector2f pos(wrap(car.getPosition().x + delta.x,window.getSize().x,200), wrap(car.getPosition().y+delta.y,window.getSize().y,200));
-		car.setPosition(pos);
-		car.rotate(rotation);
+			driving = false;
+		if (driving)
+		{
+			delta = -increment;
+			Vector2f pos(wrap(car.getPosition().x + delta.x,window.getSize().x,200), wrap(car.getPosition().y+delta.y,window.getSize().y,200));
+			car.setPosition(pos);
+			car.rotate(rotation);
+		}
 
         // clear the window with black color
         window.clear(Color::Green);
