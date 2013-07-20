@@ -26,6 +26,12 @@ int main()
 	window.setVerticalSyncEnabled(true);
 	window.setMouseCursorVisible(false);
 
+	RectangleShape background;
+	Texture background_t;
+	background_t.loadFromFile("resources/city1.jpg");
+	background.setSize(Vector2f(window.getSize().x,window.getSize().y));
+	background.setTexture(&background_t);
+
 	//RectangleShape car(Vector2f(10,20));
 	Sprite car;
 	Texture car_t;
@@ -58,6 +64,10 @@ int main()
 						car.setPosition(Vector2f(window.getSize().x/2,window.getSize().y/2));
 						break;
 					}
+					if (event.key.code == Keyboard::Up) {
+						driving = not driving;
+						break;
+					}
 				default: break;
 			}
         }
@@ -66,15 +76,15 @@ int main()
 		//std::cout << elapsed.asMicroseconds()	<< std::endl;
 		Vector2f delta;
 		float rotation = 0.f;
-		float speed = 0.0002f * elapsed.asMicroseconds();
+		float speed = 1.5e-4f * elapsed.asMicroseconds();
 		float angle = car.getRotation()/180*M_PI + M_PI_2;
 		Vector2f increment(speed*cos(angle), speed*sin(angle));
 		if (Keyboard::isKeyPressed(Keyboard::Left))
 			rotation = -4;
 		if (Keyboard::isKeyPressed(Keyboard::Right))
 			rotation = 4;
-		if (Keyboard::isKeyPressed(Keyboard::Up))
-			driving = true;
+		//if (Keyboard::isKeyPressed(Keyboard::Up))
+			//driving = not driving;
 		if (Keyboard::isKeyPressed(Keyboard::Down))
 			driving = false;
 		if (driving)
@@ -89,7 +99,8 @@ int main()
         window.clear(Color::Green);
 
         // draw everything here...
-         window.draw(car);
+		window.draw(background);
+		window.draw(car);
 
         // end the current frame
         window.display();
