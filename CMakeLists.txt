@@ -19,3 +19,5 @@ target_link_libraries(car ${SFML_LIBRARIES})
 
 add_executable(count count.cpp)
 target_link_libraries(count ${SFML_LIBRARIES} ${Boost_LIBRARIES})
+add_executable(letters letters.cpp)
+target_link_libraries(letters ${SFML_LIBRARIES} ${Boost_LIBRARIES})
