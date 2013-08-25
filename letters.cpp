@@ -14,7 +14,8 @@ class TextLoader {
 	public:
 		TextLoader() :
 			colors({Color::Black,Color::White,Color::Blue,Color::Red,Color::Yellow,
-					Color::Magenta,Color::Cyan,Color(255,128,0),Color(50,128,70)})
+					Color::Magenta,Color::Cyan,Color(255,128,0),Color(50,128,70),
+					Color(130,60,30)})
 		{
 			font.loadFromFile("/usr/share/fonts/TTF/arial.ttf");
 		}
@@ -77,6 +78,7 @@ int main()
 	sprites.AddString("LISA");
 	sprites.AddString("MAMAN");
 	sprites.AddString("PAPA");
+	sprites.AddString("JOEL");
 	Music music;
 	music.openFromFile("resources/mario.ogg");
 	music.setLoop(true);
