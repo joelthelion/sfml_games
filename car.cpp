@@ -40,7 +40,7 @@ int main()
 	car.setPosition(Vector2f(window.getSize().x/2,window.getSize().y/2));
 	car.setOrigin(16,23.5);
 	sf::Clock clock;
-	bool driving = false;
+	int driving = 0;
 
     // run the program as long as the window is open
     while (window.isOpen())
@@ -65,7 +65,19 @@ int main()
 						break;
 					}
 					if (event.key.code == Keyboard::Up) {
-						driving = not driving;
+						if (driving != 2)
+							driving++;
+						else
+							driving--;
+						break;
+					}
+					if (event.key.code == Keyboard::Down) {
+						if (driving > 0)
+							driving=0;
+						else if (driving ==0)
+							driving--;
+						else
+							driving=0;
 						break;
 					}
 				default: break;
@@ -84,13 +96,9 @@ int main()
 			rotation = -rotation_speed;
 		if (Keyboard::isKeyPressed(Keyboard::Right))
 			rotation = rotation_speed;
-		//if (Keyboard::isKeyPressed(Keyboard::Up))
-			//driving = not driving;
-		if (Keyboard::isKeyPressed(Keyboard::Down))
-			driving = false;
 		if (driving)
 		{
-			delta = -increment;
+			delta = -increment * (float)driving;
 			Vector2f pos(wrap(car.getPosition().x + delta.x,window.getSize().x,200), wrap(car.getPosition().y+delta.y,window.getSize().y,200));
 			car.setPosition(pos);
 		}
