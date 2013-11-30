@@ -2,7 +2,6 @@
 #include <SFML/Audio.hpp>
 #include <cmath>
 #include <map>
-#include <iostream>
 
 using namespace sf;
 
@@ -17,7 +16,6 @@ class LetterSounds {
 				static SoundMap init_map() {
 						SoundMap map;
 						for (char i='a';i<='z';++i) {
-								std::cout << "init " << i << std::endl;
 								SoundBuffer b;
 								std::string filename = "x.ogg";
 								filename[0] = i;
@@ -43,7 +41,16 @@ int main()
 		Font font;
 		font.loadFromFile("/usr/share/fonts/TTF/arial.ttf");
 		Text txt;
+		txt.setCharacterSize(52);
+		txt.setColor(Color::Black);
 		txt.setFont(font);
+		txt.setPosition(668,170);
+
+		RectangleShape background;
+		Texture background_t;
+		background_t.loadFromFile("resources/cars.jpg");
+		background.setSize(Vector2f(window.getSize().x,window.getSize().y));
+		background.setTexture(&background_t);
 
     // run the program as long as the window is open
     while (window.isOpen())
@@ -64,8 +71,8 @@ int main()
 						if (str == "[") { return 0; }
 						char letter = (char)str[0];
 						if (letter >= 'a' && letter <= 'z') {
-								std::cout << letter << std::endl;
 								LetterSounds::play(letter);
+								if (text.size() >= 30) text = "";
 								text += toupper(letter);
 						}
 						break;
@@ -76,7 +83,8 @@ int main()
         }
 
         // clear the window with black color
-        window.clear(Color::Green);
+        window.clear();
+				window.draw(background);
 
         // draw everything here...
 				txt.setString(text);
