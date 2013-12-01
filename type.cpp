@@ -69,7 +69,7 @@ int main()
 					{
 						String str(event.text.unicode);
 						if (str == "[") { return 0; }
-						char letter = (char)str[0];
+						char letter = tolower((char)str[0]);
 						if (letter >= 'a' && letter <= 'z') {
 								LetterSounds::play(letter);
 								if (text.size() >= 30) text = "";
