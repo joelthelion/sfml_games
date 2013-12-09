@@ -13,13 +13,21 @@ class LetterSounds {
 				}
 		protected:
 				typedef std::map<char,SoundBuffer> SoundMap;
+				static void make_buffer(char i,SoundBuffer& b) {
+						std::string filename = "x.ogg";
+						filename[0] = i;
+						b.loadFromFile("lettres2/"+filename);
+				}
 				static SoundMap init_map() {
 						SoundMap map;
 						for (char i='a';i<='z';++i) {
 								SoundBuffer b;
-								std::string filename = "x.ogg";
-								filename[0] = i;
-								b.loadFromFile("lettres/"+filename);
+								make_buffer(i,b);
+								map[i] = b;  
+						}
+						for (char i='0';i<='9';++i) {
+								SoundBuffer b;
+								make_buffer(i,b);
 								map[i] = b;  
 						}
 						return map;
@@ -45,6 +53,7 @@ int main()
 		txt.setColor(Color::Black);
 		txt.setFont(font);
 		txt.setPosition(668,170);
+		char letter=0;
 
 		RectangleShape background;
 		Texture background_t;
@@ -69,11 +78,14 @@ int main()
 					{
 						String str(event.text.unicode);
 						if (str == "[") { return 0; }
-						char letter = tolower((char)str[0]);
-						if (letter >= 'a' && letter <= 'z') {
-								LetterSounds::play(letter);
-								if (text.size() >= 30) text = "";
-								text += toupper(letter);
+						char new_letter = tolower((char)str[0]);
+						if (new_letter != letter) {// Disallow long presses
+								letter = new_letter;
+								if ((letter >= 'a' && letter <= 'z') || (letter >= '0' && letter <= '9')) {
+										LetterSounds::play(letter);
+										if (text.size() >= 30) text = "";
+										text += toupper(letter);
+								}
 						}
 						break;
 					}
