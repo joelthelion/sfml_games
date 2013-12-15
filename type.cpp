@@ -77,6 +77,12 @@ int main()
     king.background_image = "resources/king2.jpg";
 		king.width = 1132;
 		vec_backgrounds.push_back(&king);
+		Background hicks(font);
+		hicks.txt.setPosition(696,118);
+    hicks.background_image = "resources/hicks2.jpg";
+		hicks.width = 1088;
+		vec_backgrounds.push_back(&hicks);
+
 		std::random_shuffle(vec_backgrounds.begin(),vec_backgrounds.end());
 		std::list<Background*> backgrounds;
 		std::copy(vec_backgrounds.begin(),vec_backgrounds.end(),std::back_inserter(backgrounds));
