@@ -2,6 +2,9 @@
 #include <SFML/Audio.hpp>
 #include <cmath>
 #include <map>
+#include <list>
+#include <algorithm>
+#include <iostream>
 
 using namespace sf;
 
@@ -36,6 +39,19 @@ class LetterSounds {
 				static Sound snd;
 };
 
+struct Background {
+		Text txt;
+		std::string background_image;
+		Background(Font& font) {
+				txt.setCharacterSize(52);
+				txt.setColor(Color::Black);
+				txt.setFont(font);
+		}
+		void SetBackground(Texture& texture) {
+				texture.loadFromFile(background_image);
+		}
+};
+
 LetterSounds::SoundMap LetterSounds::sounds = LetterSounds::init_map();
 Sound LetterSounds::snd;
 
@@ -48,16 +64,25 @@ int main()
 		std::string text;
 		Font font;
 		font.loadFromFile("/usr/share/fonts/TTF/arial.ttf");
-		Text txt;
-		txt.setCharacterSize(52);
-		txt.setColor(Color::Black);
-		txt.setFont(font);
-		txt.setPosition(668,170);
+		
+		std::vector<Background*> vec_backgrounds;
+		Background flash(font);
+		flash.txt.setPosition(668,170);
+    flash.background_image = "resources/cars.jpg";
+		vec_backgrounds.push_back(&flash);
+		Background king(font);
+		king.txt.setPosition(668,170);
+    king.background_image = "resources/king2.jpg";
+		vec_backgrounds.push_back(&king);
+		std::random_shuffle(vec_backgrounds.begin(),vec_backgrounds.end());
+		std::list<Background*> backgrounds;
+		std::copy(vec_backgrounds.begin(),vec_backgrounds.end(),std::back_inserter(backgrounds));
+
 		char letter=0;
 
 		RectangleShape background;
 		Texture background_t;
-		background_t.loadFromFile("resources/cars.jpg");
+		backgrounds.front()->SetBackground(background_t);
 		background.setSize(Vector2f(window.getSize().x,window.getSize().y));
 		background.setTexture(&background_t);
 
@@ -83,7 +108,11 @@ int main()
 								letter = new_letter;
 								if ((letter >= 'a' && letter <= 'z') || (letter >= '0' && letter <= '9')) {
 										LetterSounds::play(letter);
-										if (text.size() >= 30) text = "";
+										if (text.size() >= 30) {
+												text = "";
+												backgrounds.splice(backgrounds.end(),backgrounds,backgrounds.begin());
+												backgrounds.front()->SetBackground(background_t);
+										}
 										text += toupper(letter);
 								}
 						}
@@ -99,8 +128,8 @@ int main()
 				window.draw(background);
 
         // draw everything here...
-				txt.setString(text);
-				window.draw(txt);
+				backgrounds.front()->txt.setString(text);
+				window.draw(backgrounds.front()->txt);
 				
 
         // end the current frame
