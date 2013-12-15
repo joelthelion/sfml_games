@@ -42,6 +42,7 @@ class LetterSounds {
 struct Background {
 		Text txt;
 		std::string background_image;
+		int width;
 		Background(Font& font) {
 				txt.setCharacterSize(52);
 				txt.setColor(Color::Black);
@@ -67,12 +68,14 @@ int main()
 		
 		std::vector<Background*> vec_backgrounds;
 		Background flash(font);
-		flash.txt.setPosition(668,170);
+		flash.txt.setPosition(655,170);
     flash.background_image = "resources/cars.jpg";
+		flash.width = 1132;
 		vec_backgrounds.push_back(&flash);
 		Background king(font);
-		king.txt.setPosition(668,170);
+		king.txt.setPosition(655,170);
     king.background_image = "resources/king2.jpg";
+		king.width = 1132;
 		vec_backgrounds.push_back(&king);
 		std::random_shuffle(vec_backgrounds.begin(),vec_backgrounds.end());
 		std::list<Background*> backgrounds;
@@ -108,12 +111,15 @@ int main()
 								letter = new_letter;
 								if ((letter >= 'a' && letter <= 'z') || (letter >= '0' && letter <= '9')) {
 										LetterSounds::play(letter);
-										if (text.size() >= 30) {
-												text = "";
+										text += toupper(letter);
+										Background& current = *(backgrounds.front());
+										current.txt.setString(text);
+										if (current.txt.getLocalBounds().width > current.width ) {
+												text = toupper(letter);
+												current.txt.setString(text);
 												backgrounds.splice(backgrounds.end(),backgrounds,backgrounds.begin());
 												backgrounds.front()->SetBackground(background_t);
 										}
-										text += toupper(letter);
 								}
 						}
 						break;
