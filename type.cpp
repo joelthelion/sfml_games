@@ -43,14 +43,27 @@ struct Background {
 		Text txt;
 		std::string background_image;
 		int width;
-		Background(Font& font) {
+		Background(Font& font, const RenderWindow& win) {
 				txt.setCharacterSize(52);
 				txt.setColor(Color::Black);
 				txt.setFont(font);
+				win_width = win.getSize().x;
+				win_height = win.getSize().y;
 		}
 		void SetBackground(Texture& texture) {
 				texture.loadFromFile(background_image);
 		}
+		void setOriginalTextPosition(int x,int y) {
+				txt.setPosition(x*win_width/original_width,y*win_height/original_height);
+		}
+		void setOriginalWidth(int w) {
+				width = w*win_width/original_width;
+		}
+		protected:
+			int original_width=1920;
+			int original_height=1080;
+			int win_width;
+			int win_height;
 };
 
 LetterSounds::SoundMap LetterSounds::sounds = LetterSounds::init_map();
@@ -67,20 +80,20 @@ int main()
 		font.loadFromFile("/usr/share/fonts/TTF/arial.ttf");
 		
 		std::vector<Background*> vec_backgrounds;
-		Background flash(font);
-		flash.txt.setPosition(655,170);
+		Background flash(font,window);
+		flash.setOriginalTextPosition(655,170);
     flash.background_image = "resources/cars.jpg";
-		flash.width = 1132;
+		flash.setOriginalWidth(1132);
 		vec_backgrounds.push_back(&flash);
-		Background king(font);
-		king.txt.setPosition(655,170);
+		Background king(font,window);
+		king.setOriginalTextPosition(655,170);
     king.background_image = "resources/king2.jpg";
-		king.width = 1132;
+		king.setOriginalWidth(1132);
 		vec_backgrounds.push_back(&king);
-		Background hicks(font);
-		hicks.txt.setPosition(696,118);
+		Background hicks(font,window);
+		hicks.setOriginalTextPosition(696,118);
     hicks.background_image = "resources/hicks2.jpg";
-		hicks.width = 1088;
+		hicks.setOriginalWidth(1088);
 		vec_backgrounds.push_back(&hicks);
 
 		std::random_shuffle(vec_backgrounds.begin(),vec_backgrounds.end());
