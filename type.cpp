@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
+#include <SFML/System/Clock.hpp>
 #include <cmath>
 #include <map>
 #include <list>
@@ -78,6 +79,8 @@ int main()
 		std::string text;
 		Font font;
 		font.loadFromFile("/usr/share/fonts/TTF/arial.ttf");
+
+		Clock clock;
 		
 		std::vector<Background*> vec_backgrounds;
 		Background flash(font,window);
@@ -100,7 +103,7 @@ int main()
 		std::list<Background*> backgrounds;
 		std::copy(vec_backgrounds.begin(),vec_backgrounds.end(),std::back_inserter(backgrounds));
 
-		char letter=0;
+		char letter;
 
 		RectangleShape background;
 		Texture background_t;
@@ -125,20 +128,20 @@ int main()
 					{
 						String str(event.text.unicode);
 						if (str == "[") { return 0; }
-						char new_letter = tolower((char)str[0]);
-						if (new_letter != letter) {// Disallow long presses
-								letter = new_letter;
-								if ((letter >= 'a' && letter <= 'z') || (letter >= '0' && letter <= '9')) {
-										LetterSounds::play(letter);
-										text += toupper(letter);
-										Background& current = *(backgrounds.front());
+						letter = tolower((char)str[0]);
+						if (clock.getElapsedTime().asMilliseconds() >= 700 && (
+												(letter >= 'a' && letter <= 'z') ||
+												(letter >= '0' && letter <= '9'))) {
+								clock.restart();
+								LetterSounds::play(letter);
+								text += toupper(letter);
+								Background& current = *(backgrounds.front());
+								current.txt.setString(text);
+								if (current.txt.getLocalBounds().width > current.width ) {
+										text = toupper(letter);
 										current.txt.setString(text);
-										if (current.txt.getLocalBounds().width > current.width ) {
-												text = toupper(letter);
-												current.txt.setString(text);
-												backgrounds.splice(backgrounds.end(),backgrounds,backgrounds.begin());
-												backgrounds.front()->SetBackground(background_t);
-										}
+										backgrounds.splice(backgrounds.end(),backgrounds,backgrounds.begin());
+										backgrounds.front()->SetBackground(background_t);
 								}
 						}
 						break;
