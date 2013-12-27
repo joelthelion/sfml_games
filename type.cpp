@@ -41,13 +41,13 @@ class LetterSounds {
 };
 
 struct Background {
-		Text txt;
 		std::string background_image;
 		int width;
-		Background(Font& font, const RenderWindow& win) {
-				txt.setCharacterSize(52);
-				txt.setColor(Color::Black);
-				txt.setFont(font);
+		Background(Font& f, const RenderWindow& win) :
+				font(f),
+				text_width(0)
+		{
+				font = f;
 				win_width = win.getSize().x;
 				win_height = win.getSize().y;
 		}
@@ -55,16 +55,43 @@ struct Background {
 				texture.loadFromFile(background_image);
 		}
 		void setOriginalTextPosition(int x,int y) {
-				txt.setPosition(x*win_width/original_width,y*win_height/original_height);
+				position.x = x*win_width/original_width;
+				position.y = y*win_height/original_height;
 		}
 		void setOriginalWidth(int w) {
 				width = w*win_width/original_width;
+		}
+		void setString(std::string s) {
+				letters.clear();
+				float x = position.x;
+				for (auto i:s) {
+						letters.emplace_back();
+						Text& txt = letters.back();
+						txt.setCharacterSize(52);
+						txt.setColor(Color::Black);
+						txt.setFont(font);
+						char a[] = {(char)tolower(i),'\n',(char)toupper(i),0};
+						txt.setString(a);
+						txt.setPosition(x,position.y);
+						x += txt.getLocalBounds().width;
+				}
+				text_width = x - position.x;
+		}
+		void render(RenderWindow& window) {
+				for (auto i:letters) {
+						window.draw(i);
+				}
 		}
 		protected:
 			int original_width=1920;
 			int original_height=1080;
 			int win_width;
 			int win_height;
+			std::vector<Text> letters;
+			Vector2f position;
+			Font& font;
+		public:
+			int text_width;
 };
 
 LetterSounds::SoundMap LetterSounds::sounds = LetterSounds::init_map();
@@ -85,22 +112,22 @@ int main()
 		
 		std::vector<Background*> vec_backgrounds;
 		Background flash(font,window);
-		flash.setOriginalTextPosition(655,170);
+		flash.setOriginalTextPosition(655,125);
     flash.background_image = "resources/cars.jpg";
 		flash.setOriginalWidth(1132);
 		vec_backgrounds.push_back(&flash);
 		Background king(font,window);
-		king.setOriginalTextPosition(655,170);
+		king.setOriginalTextPosition(655,125);
     king.background_image = "resources/king2.jpg";
 		king.setOriginalWidth(1132);
 		vec_backgrounds.push_back(&king);
 		Background hicks(font,window);
-		hicks.setOriginalTextPosition(696,118);
+		hicks.setOriginalTextPosition(696,73);
     hicks.background_image = "resources/hicks2.jpg";
 		hicks.setOriginalWidth(1088);
 		vec_backgrounds.push_back(&hicks);
 
-		std::random_shuffle(vec_backgrounds.begin(),vec_backgrounds.end());
+		//std::random_shuffle(vec_backgrounds.begin(),vec_backgrounds.end());
 		std::list<Background*> backgrounds;
 		std::copy(vec_backgrounds.begin(),vec_backgrounds.end(),std::back_inserter(backgrounds));
 
@@ -139,10 +166,10 @@ int main()
 								LetterSounds::play(letter);
 								text += toupper(letter);
 								Background& current = *(backgrounds.front());
-								current.txt.setString(text);
-								if (current.txt.getLocalBounds().width > current.width ) {
+								current.setString(text);
+								if (current.text_width > current.width ) {
 										text = toupper(letter);
-										current.txt.setString(text);
+										current.setString(text);
 										backgrounds.splice(backgrounds.end(),backgrounds,backgrounds.begin());
 										backgrounds.front()->SetBackground(background_t);
 								}
@@ -159,9 +186,8 @@ int main()
 				window.draw(background);
 
         // draw everything here...
-				backgrounds.front()->txt.setString(text);
-				window.draw(backgrounds.front()->txt);
-				
+				backgrounds.front()->setString(text);
+				backgrounds.front()->render(window);
 
         // end the current frame
         window.display();
