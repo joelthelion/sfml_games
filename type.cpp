@@ -81,6 +81,7 @@ int main()
 		font.loadFromFile("/usr/share/fonts/TTF/arial.ttf");
 
 		Clock clock;
+		bool first_run = true;
 		
 		std::vector<Background*> vec_backgrounds;
 		Background flash(font,window);
@@ -129,10 +130,12 @@ int main()
 						String str(event.text.unicode);
 						if (str == "[") { return 0; }
 						letter = tolower((char)str[0]);
-						if (clock.getElapsedTime().asMilliseconds() >= 700 && (
+						if ((first_run || clock.getElapsedTime().asMilliseconds() >= 700) && (
 												(letter >= 'a' && letter <= 'z') ||
 												(letter >= '0' && letter <= '9'))) {
 								clock.restart();
+								first_run = false;
+
 								LetterSounds::play(letter);
 								text += toupper(letter);
 								Background& current = *(backgrounds.front());
