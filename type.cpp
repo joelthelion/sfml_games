@@ -20,7 +20,7 @@ class LetterSounds {
 				static void make_buffer(char i,SoundBuffer& b) {
 						std::string filename = "x.ogg";
 						filename[0] = i;
-						b.loadFromFile("lettres2/"+filename);
+						b.loadFromFile("letters/"+filename);
 				}
 				static SoundMap init_map() {
 						SoundMap map;
