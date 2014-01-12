@@ -77,9 +77,11 @@ flags = [
 '-isystem',
 './tests/gmock',
 '-isystem',
-'./tests/gmock/include'
-'-I'
-'/usr/include'
+'./tests/gmock/include',
+'-I',
+'/usr/include',
+'-I',
+'utils',
 ]
 
 # Set this to the absolute path to the folder (NOT the file!) containing the

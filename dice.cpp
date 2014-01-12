@@ -2,7 +2,7 @@
 #include <boost/filesystem.hpp>
 #include <cmath>
 #include <vector>
-#include "random_sprites.h"
+#include <random_sprites.h>
 
 using namespace sf;
 namespace fs = ::boost::filesystem;
