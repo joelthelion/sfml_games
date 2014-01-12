@@ -2,6 +2,7 @@
 #include <boost/filesystem.hpp>
 #include <cmath>
 #include <vector>
+#include "random_sprites.h"
 
 using namespace sf;
 namespace fs = ::boost::filesystem;
@@ -30,6 +31,13 @@ struct Dice {
 
 };
 
+Vector2f AdaptToWindowSize(int x, int y, const RenderWindow& window, int original_width=1920,int original_height=1080) {
+		Vector2f pos;
+		pos.x = static_cast<double>(x) * window.getSize().x / original_width;
+		pos.y = static_cast<double>(y) * window.getSize().y / original_height;
+		return pos;
+}
+
 
 int main()
 {
@@ -40,18 +48,26 @@ int main()
 		Font font;
 		font.loadFromFile("/usr/share/fonts/TTF/arial.ttf");
 		text.setFont(font);
-		text.setCharacterSize(247);
+		text.setCharacterSize(247*window.getSize().y/1080);
 		text.setColor(Color::Black);
-		text.setPosition(1660,193);
+		Vector2f pos = AdaptToWindowSize(1660,193,window);
+		text.setPosition(pos.x,pos.y);
 
 		Sprite sprite;
+		RandomSpriteLoader random_sprites;
+		//random_sprites.Get
 		Dice dice;
 		//Texture texture;
 		//texture.loadFromFile("resources/dice/1.png");
-		sprite.setPosition(1600,540);
+		pos = AdaptToWindowSize(1600,540,window);
+		sprite.setPosition(pos.x,pos.y);
+		sprite.setScale(window.getSize().y/1080.,window.getSize().y/1080.);
 		int current = rand() % 6 +1;
 		sprite.setTexture(*(dice.textures[current-1]));
 		text.setString(static_cast<char>(48+current));
+		std::vector<Sprite> sprites = random_sprites.getRandomSpriteNTimes(current);
+		Vector2f sprite_region = AdaptToWindowSize(1400,1080,window);
+		RandomlyPlaceSprites(window,sprites,sprite_region);
 
 		// run the program as long as the window is open
 		while (window.isOpen())
@@ -72,9 +88,11 @@ int main()
 												break;
 										}
 										if (event.key.code == Keyboard::Space) {
-												int current = rand() % 6 +1;
+												current = rand() % 6 +1;
 												sprite.setTexture(*(dice.textures[current-1]));
 												text.setString(static_cast<char>(48+current));
+												sprites = random_sprites.getRandomSpriteNTimes(current);
+												RandomlyPlaceSprites(window,sprites,sprite_region);
 												break;
 										}
 								default:
@@ -88,6 +106,8 @@ int main()
 				// draw everything here...
 				window.draw(text);
 				window.draw(sprite);
+				for (auto s: sprites)
+						window.draw(s);
 
 				// end the current frame
 				window.display();

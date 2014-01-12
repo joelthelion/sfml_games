@@ -17,6 +17,7 @@ class RandomSpriteLoader {
 		std::vector<sf::Texture*> textures;
 };
 
-void RandomlyPlaceSprites(sf::Window& window,std::vector<sf::Sprite>& sprites);
+void RandomlyPlaceSprites(sf::Window& window,std::vector<sf::Sprite>& sprites,
+				sf::Vector2f size=sf::Vector2f(0,0));
 
 #endif

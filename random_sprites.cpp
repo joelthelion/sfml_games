@@ -45,15 +45,16 @@ std::vector<sf::Sprite> RandomSpriteLoader::getRandomSpriteNTimes(unsigned int n
 		return output;
 }
 
-
-void RandomlyPlaceSprites(sf::Window& window,std::vector<sf::Sprite>& sprites) {
-		const int width = window.getSize().x;
-		const int height = window.getSize().y;
+void RandomlyPlaceSprites(sf::Window& window,std::vector<sf::Sprite>& sprites, Vector2f size) {
+		if (size.x == 0) {
+				size.x = window.getSize().x;
+				size.y = window.getSize().y;
+		}
 		unsigned int tries = 0;
 restart:
 		for (auto it = sprites.begin(); it != sprites.end();++it) {
-				it->setPosition(rand()%(int)(width - it->getLocalBounds().width),
-								rand()%(int)(height - it->getLocalBounds().height));
+				it->setPosition(rand()%(int)(size.x - it->getLocalBounds().width),
+								rand()%(int)(size.y - it->getLocalBounds().height));
 				for (auto other = sprites.begin(); other != it; ++other) {
 						if (tries < 1e5 && it->getGlobalBounds().intersects(other->getGlobalBounds())) {
 								tries++;
