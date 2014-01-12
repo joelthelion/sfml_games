@@ -7,6 +7,9 @@ find_package(SFML REQUIRED system window graphics network audio)
 find_package(Boost COMPONENTS system filesystem REQUIRED)
 include_directories(${Boost_INCLUDE_DIR})
 
+subdirs(utils)
+include_directories(utils)
+
 add_executable(road road.cpp)
 target_link_libraries(road ${SFML_LIBRARIES})
 
@@ -19,8 +22,8 @@ target_link_libraries(wrap ${SFML_LIBRARIES})
 add_executable(car car.cpp)
 target_link_libraries(car ${SFML_LIBRARIES})
 
-add_executable(count count.cpp random_sprites.cpp)
-target_link_libraries(count ${SFML_LIBRARIES} ${Boost_LIBRARIES})
+add_executable(count count.cpp)
+target_link_libraries(count utils ${SFML_LIBRARIES} ${Boost_LIBRARIES})
 
 add_executable(letters letters.cpp)
 target_link_libraries(letters ${SFML_LIBRARIES} ${Boost_LIBRARIES})
@@ -31,5 +34,5 @@ target_link_libraries(words ${SFML_LIBRARIES} ${Boost_LIBRARIES})
 add_executable(type type.cpp)
 target_link_libraries(type ${SFML_LIBRARIES} ${Boost_LIBRARIES})
 
-add_executable(dice dice.cpp random_sprites.cpp)
-target_link_libraries(dice ${SFML_LIBRARIES} ${Boost_LIBRARIES})
+add_executable(dice dice.cpp )
+target_link_libraries(dice utils ${SFML_LIBRARIES} ${Boost_LIBRARIES})
