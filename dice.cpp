@@ -73,7 +73,7 @@ int main()
 		sprite.setTexture(*(dice.textures[current-1]));
 		text.setString(static_cast<char>(48+current));
 		std::vector<Sprite> sprites = random_sprites.getRandomSpriteNTimes(current);
-		Vector2f sprite_region = AdaptToWindowSize(1400,1080,window);
+		Vector2f sprite_region = AdaptToWindowSize(1500,1080,window);
 		RandomlyPlaceSprites(window,sprites,sprite_region);
 
 		// run the program as long as the window is open
