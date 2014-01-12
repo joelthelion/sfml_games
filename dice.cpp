@@ -53,6 +53,13 @@ int main()
 		Vector2f pos = AdaptToWindowSize(1660,193,window);
 		text.setPosition(pos.x,pos.y);
 
+		Texture background_t;
+		background_t.loadFromFile("resources/dice_bck.png");
+		Sprite background;
+		background.setTexture(background_t);
+		background.setScale(window.getSize().x/1920.,window.getSize().y/1080.);
+		
+
 		Sprite sprite;
 		RandomSpriteLoader random_sprites;
 		//random_sprites.Get
@@ -104,6 +111,7 @@ int main()
 				window.clear(Color::Green);
 
 				// draw everything here...
+				window.draw(background);
 				window.draw(text);
 				window.draw(sprite);
 				for (auto s: sprites)
