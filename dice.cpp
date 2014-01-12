@@ -3,6 +3,7 @@
 #include <cmath>
 #include <vector>
 #include <random_sprites.h>
+#include <music.h>
 
 using namespace sf;
 namespace fs = ::boost::filesystem;
@@ -41,6 +42,7 @@ Vector2f AdaptToWindowSize(int x, int y, const RenderWindow& window, int origina
 
 int main()
 {
+		MarioPlayer mario;
 		// create the window
 		//RenderWindow window(VideoMode(800, 600), "My window");
 		RenderWindow window(VideoMode::getFullscreenModes()[0], "My window", Style::Fullscreen);

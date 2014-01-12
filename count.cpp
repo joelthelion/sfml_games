@@ -5,8 +5,8 @@
 #include <algorithm>
 #include <boost/filesystem.hpp>
 #include <SFML/Graphics.hpp>
-#include <SFML/Audio.hpp>
 #include <random_sprites.h>
+#include <music.h>
 
 using namespace sf;
 namespace fs = ::boost::filesystem;
@@ -16,10 +16,7 @@ int main()
 {
 	const int MAX_N = 4;
 	RandomSpriteLoader sprites;
-	Music music;
-	music.openFromFile("resources/mario.ogg");
-	music.setLoop(true);
-	music.play();
+	MarioPlayer mario;
 	boost::filesystem::directory_iterator it;
 
     // create the window
