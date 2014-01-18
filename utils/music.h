@@ -5,7 +5,7 @@
 //Repetitively play mario
 class MarioPlayer {
 		public:
-				MarioPlayer();
+				MarioPlayer(float volume=100.);
 		protected:
 				sf::Music music;
 };

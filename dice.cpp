@@ -2,8 +2,10 @@
 #include <boost/filesystem.hpp>
 #include <cmath>
 #include <vector>
+#include <cstdio>
 #include <random_sprites.h>
 #include <music.h>
+#include <letter_sounds.h>
 
 using namespace sf;
 namespace fs = ::boost::filesystem;
@@ -42,7 +44,7 @@ Vector2f AdaptToWindowSize(int x, int y, const RenderWindow& window, int origina
 
 int main()
 {
-		MarioPlayer mario;
+		MarioPlayer mario(20.);
 		// create the window
 		//RenderWindow window(VideoMode(800, 600), "My window");
 		RenderWindow window(VideoMode::getFullscreenModes()[0], "My window", Style::Fullscreen);
@@ -77,6 +79,7 @@ int main()
 		std::vector<Sprite> sprites = random_sprites.getRandomSpriteNTimes(current);
 		Vector2f sprite_region = AdaptToWindowSize(1500,1080,window);
 		RandomlyPlaceSprites(window,sprites,sprite_region);
+		LetterSounds::play(48+current);
 
 		// run the program as long as the window is open
 		while (window.isOpen())
@@ -102,6 +105,7 @@ int main()
 												text.setString(static_cast<char>(48+current));
 												sprites = random_sprites.getRandomSpriteNTimes(current);
 												RandomlyPlaceSprites(window,sprites,sprite_region);
+												LetterSounds::play(48+current);
 												break;
 										}
 								default:

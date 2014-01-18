@@ -32,7 +32,7 @@ add_executable(words words.cpp)
 target_link_libraries(words ${SFML_LIBRARIES} ${Boost_LIBRARIES})
 
 add_executable(type type.cpp)
-target_link_libraries(type ${SFML_LIBRARIES} ${Boost_LIBRARIES})
+target_link_libraries(type utils ${SFML_LIBRARIES} ${Boost_LIBRARIES})
 
 add_executable(dice dice.cpp )
 target_link_libraries(dice utils ${SFML_LIBRARIES} ${Boost_LIBRARIES})
