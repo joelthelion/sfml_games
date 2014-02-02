@@ -86,11 +86,16 @@ int main()
     king.background_image = "resources/king2.jpg";
 		king.setOriginalWidth(1132);
 		vec_backgrounds.push_back(&king);
-		Background hicks(font,window);
-		hicks.setOriginalTextPosition(696,73);
-    hicks.background_image = "resources/hicks2.jpg";
-		hicks.setOriginalWidth(1088);
-		vec_backgrounds.push_back(&hicks);
+		//Background hicks(font,window);
+		//hicks.setOriginalTextPosition(696,73);
+    //hicks.background_image = "resources/hicks2.jpg";
+		//hicks.setOriginalWidth(1088);
+		//vec_backgrounds.push_back(&hicks);
+		Background dusty(font,window);
+		dusty.setOriginalTextPosition(1070,917);
+    dusty.background_image = "resources/dusty2.png";
+		dusty.setOriginalWidth(808);
+		vec_backgrounds.push_back(&dusty);
 
 		//std::random_shuffle(vec_backgrounds.begin(),vec_backgrounds.end());
 		std::list<Background*> backgrounds;
