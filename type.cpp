@@ -12,6 +12,7 @@ struct Background {
 		std::string background_image;
 		int width;
 		Background(Font& f, const RenderWindow& win) :
+				letter_margin(5),
 				font(f),
 				text_width(0)
 		{
@@ -41,7 +42,7 @@ struct Background {
 						char a[] = {(char)tolower(i),'\n',(char)toupper(i),0};
 						txt.setString(a);
 						txt.setPosition(x,position.y);
-						x += txt.getLocalBounds().width;
+						x += txt.getLocalBounds().width + letter_margin;
 				}
 				text_width = x - position.x;
 		}
@@ -55,6 +56,7 @@ struct Background {
 			int original_height=1080;
 			int win_width;
 			int win_height;
+			int letter_margin;
 			std::vector<Text> letters;
 			Vector2f position;
 			Font& font;
