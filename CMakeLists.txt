@@ -36,3 +36,6 @@ target_link_libraries(type utils ${SFML_LIBRARIES} ${Boost_LIBRARIES})
 
 add_executable(dice dice.cpp )
 target_link_libraries(dice utils ${SFML_LIBRARIES} ${Boost_LIBRARIES})
+
+add_executable(many many.cpp )
+target_link_libraries(many utils ${SFML_LIBRARIES} ${Boost_LIBRARIES})

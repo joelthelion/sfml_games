@@ -14,7 +14,7 @@ namespace fs = ::boost::filesystem;
 
 int main()
 {
-	const int MAX_N = 4;
+	const int MAX_N = 6;
 	RandomSpriteLoader sprites;
 	MarioPlayer mario;
 	boost::filesystem::directory_iterator it;

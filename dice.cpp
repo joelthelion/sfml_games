@@ -105,7 +105,7 @@ int main()
 												text.setString(static_cast<char>(48+current));
 												sprites = random_sprites.getRandomSpriteNTimes(current);
 												RandomlyPlaceSprites(window,sprites,sprite_region);
-												if (current > 3)
+												if (current > 9)
 														LetterSounds::play(48+current);
 												break;
 										}
