@@ -26,9 +26,9 @@ int main()
     RenderWindow window(VideoMode::getFullscreenModes()[0], "My window", Style::Fullscreen);
     Text text;
     Font font;
-    font.loadFromFile("/usr/share/fonts/TTF/arial.ttf");
+    font.loadFromFile("/usr/share/fonts/TTF/DejaVuSans.ttf");
     text.setFont(font);
-    text.setCharacterSize(180*window.getSize().y/1080);
+    text.setCharacterSize(150*window.getSize().y/1080);
     text.setColor(Color::Black);
     Vector2f pos = AdaptToWindowSize(1600,193,window);
     text.setPosition(pos.x,pos.y);

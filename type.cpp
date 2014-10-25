@@ -72,12 +72,17 @@ int main()
     //RenderWindow window(VideoMode(800, 600), "My window");
 		std::string text;
 		Font font;
-		font.loadFromFile("/usr/share/fonts/TTF/arial.ttf");
+		font.loadFromFile("/usr/share/fonts/TTF/DejaVuSans.ttf");
 
 		Clock clock;
 		bool first_run = true;
 		
 		std::vector<Background*> vec_backgrounds;
+		Background echo_bravo(font,window);
+		echo_bravo.setOriginalTextPosition(1117,895);
+    echo_bravo.background_image = "resources/echo_bravo2.jpg";
+		echo_bravo.setOriginalWidth(546);
+		vec_backgrounds.push_back(&echo_bravo);
 		Background flash(font,window);
 		flash.setOriginalTextPosition(655,125);
     flash.background_image = "resources/cars.jpg";
@@ -103,11 +108,6 @@ int main()
     elchu.background_image = "resources/elchu2.jpg";
 		elchu.setOriginalWidth(721);
 		vec_backgrounds.push_back(&elchu);
-		Background echo_bravo(font,window);
-		echo_bravo.setOriginalTextPosition(1117,895);
-    echo_bravo.background_image = "resources/echo_bravo2.jpg";
-		echo_bravo.setOriginalWidth(546);
-		vec_backgrounds.push_back(&echo_bravo);
 
 		//std::random_shuffle(vec_backgrounds.begin(),vec_backgrounds.end());
 		std::list<Background*> backgrounds;

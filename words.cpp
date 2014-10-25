@@ -20,7 +20,7 @@ class TextLoader {
 					Color::Magenta,Color::Cyan,Color(255,128,0),Color(50,128,70),
 					Color(130,60,30)})
 		{
-			font.loadFromFile("/usr/share/fonts/TTF/arial.ttf");
+			font.loadFromFile("/usr/share/fonts/TTF/DejaVuSans.ttf");
 		}
 		~TextLoader() {
 		}

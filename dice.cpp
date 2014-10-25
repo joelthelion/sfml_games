@@ -50,7 +50,7 @@ int main()
 		RenderWindow window(VideoMode::getFullscreenModes()[0], "My window", Style::Fullscreen);
 		Text text;
 		Font font;
-		font.loadFromFile("/usr/share/fonts/TTF/arial.ttf");
+		font.loadFromFile("/usr/share/fonts/TTF/DejaVuSans.ttf");
 		text.setFont(font);
 		text.setCharacterSize(247*window.getSize().y/1080);
 		text.setColor(Color::Black);
