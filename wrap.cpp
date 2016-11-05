@@ -15,8 +15,6 @@ int main()
     // create the window
     RenderWindow window(VideoMode(800, 600), "My window");
     //RenderWindow window(VideoMode::getFullscreenModes()[0], "My window", Style::Fullscreen);
-	double car_x = window.getSize().x/2;
-	double car_y = window.getSize().y/2;
 
 	RectangleShape car(Vector2f(10,20));
 	car.setPosition(Vector2f(window.getSize().x/2,window.getSize().y/2));
@@ -43,6 +41,8 @@ int main()
 						car.setPosition(Vector2f(window.getSize().x/2,window.getSize().y/2));
 						break;
 					}
+        default:
+          ;
 			}
         }
 		Vector2f delta;

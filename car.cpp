@@ -51,7 +51,6 @@ int main()
         {
 			switch (event.type) {
 				// "close requested" event: we close the window
-
 				case Event::Closed:
 					window.close();
 					break;

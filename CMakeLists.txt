@@ -1,7 +1,8 @@
 cmake_minimum_required(VERSION 2.8)
 project(sf1)
 
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+set( CMAKE_EXPORT_COMPILE_COMMANDS 1 )
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -Wall -Wextra -Werror")
 
 find_package(SFML REQUIRED system window graphics network audio)
 find_package(Boost COMPONENTS system filesystem REQUIRED)

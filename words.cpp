@@ -34,7 +34,7 @@ class TextLoader {
 			//cout << word << endl;
 			Text text(word,font);
 			text.setCharacterSize(72);
-			text.setColor(colors[8]);
+			text.setFillColor(colors[8]);
 			texts.push_back(text);
 			//cout << (texts[texts.size()-1].getString().toAnsiString()) << endl;
 		}
@@ -81,12 +81,12 @@ int main()
 {
 	TextLoader sprites;
 	//sprites.AddString("ANTONINNNANTONIN");
-	sprites.AddString("ANTONIN");
-	//sprites.AddString("LISA");
+	// sprites.AddString("ANTONIN");
+	sprites.AddString("LISA");
 	//sprites.AddString("MAMAN");
 	//sprites.AddString("PAPA");
 	//sprites.AddString("JOEL");
-	std::vector<std::string> other_words = {"VOITURE","VELO","SCENIC","PAPA","MAMAN","LISA","MAISON","CLIO","CRECHE","MALHEUREUSEMENT","BIBA"};
+	std::vector<std::string> other_words = {"BEBE","VELO","PAPA","MAMAN","ANTONIN","MAISON","CRECHE"};
 	sprites.SetOtherWords(other_words);
 	Music music;
 	music.openFromFile("resources/mario.ogg");

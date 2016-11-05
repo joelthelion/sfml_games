@@ -40,7 +40,7 @@ class TextLoader {
 				output[i].setFont(font);
 				output[i].setString(choice[i]);
 				output[i].setCharacterSize(128);
-				output[i].setColor(colors[(std::find(letters.begin(),letters.end(),choice[i])-letters.begin())%colors.size()]);
+				output[i].setFillColor(colors[(std::find(letters.begin(),letters.end(),choice[i])-letters.begin())%colors.size()]);
 			}
 			return output;
 		}

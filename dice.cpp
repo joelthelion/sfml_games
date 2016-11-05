@@ -44,6 +44,7 @@ Vector2f AdaptToWindowSize(int x, int y, const RenderWindow& window, int origina
 
 int main()
 {
+    const int MAX_N = 3;
 		MarioPlayer mario(20.);
 		// create the window
 		//RenderWindow window(VideoMode(800, 600), "My window");
@@ -53,7 +54,7 @@ int main()
 		font.loadFromFile("/usr/share/fonts/TTF/DejaVuSans.ttf");
 		text.setFont(font);
 		text.setCharacterSize(247*window.getSize().y/1080);
-		text.setColor(Color::Black);
+		text.setFillColor(Color::Black);
 		Vector2f pos = AdaptToWindowSize(1660,193,window);
 		text.setPosition(pos.x,pos.y);
 
@@ -62,7 +63,7 @@ int main()
 		Sprite background;
 		background.setTexture(background_t);
 		background.setScale(window.getSize().x/1920.,window.getSize().y/1080.);
-		
+
 
 		Sprite sprite;
 		RandomSpriteLoader random_sprites;
@@ -73,7 +74,7 @@ int main()
 		pos = AdaptToWindowSize(1600,540,window);
 		sprite.setPosition(pos.x,pos.y);
 		sprite.setScale(window.getSize().y/1080.,window.getSize().y/1080.);
-		int current = rand() % 6 +1;
+		int current = rand() % MAX_N +1;
 		sprite.setTexture(*(dice.textures[current-1]));
 		text.setString(static_cast<char>(48+current));
 		std::vector<Sprite> sprites = random_sprites.getRandomSpriteNTimes(current);
@@ -100,7 +101,7 @@ int main()
 												break;
 										}
 										if (event.key.code == Keyboard::Space) {
-												current = rand() % 6 +1;
+												current = rand() % MAX_N +1;
 												sprite.setTexture(*(dice.textures[current-1]));
 												text.setString(static_cast<char>(48+current));
 												sprites = random_sprites.getRandomSpriteNTimes(current);

@@ -37,7 +37,7 @@ struct Background {
 						letters.emplace_back();
 						Text& txt = letters.back();
 						txt.setCharacterSize(52);
-						txt.setColor(Color::Black);
+						txt.setFillColor(Color::Black);
 						txt.setFont(font);
 						char a[] = {(char)tolower(i),'\n',(char)toupper(i),0};
 						txt.setString(a);

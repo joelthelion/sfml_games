@@ -29,7 +29,7 @@ int main()
     font.loadFromFile("/usr/share/fonts/TTF/DejaVuSans.ttf");
     text.setFont(font);
     text.setCharacterSize(150*window.getSize().y/1080);
-    text.setColor(Color::Black);
+    text.setFillColor(Color::Black);
     Vector2f pos = AdaptToWindowSize(1600,193,window);
     text.setPosition(pos.x,pos.y);
 
@@ -46,12 +46,14 @@ int main()
     pos = AdaptToWindowSize(1600,540,window);
     const int max_smarties = 200;
     int current = rand() % max_smarties +1;
-    std::stringstream ss;
-    ss << current;
-    text.setString(ss.str());
+    // std::stringstream ss;
+    // ss << current;
+    // text.setString(ss.str());
     std::vector<Sprite> sprites = random_sprites.getRandomSpritesWithRepeat(current);
     Vector2f sprite_region = AdaptToWindowSize(1500,1080,window);
     RandomlyPlaceSprites(window,sprites,sprite_region);
+
+    bool show = false;
 
     // run the program as long as the window is open
     while (window.isOpen())
@@ -72,12 +74,17 @@ int main()
                         break;
                     }
                     if (event.key.code == Keyboard::Space) {
-                        current = rand() % max_smarties +1;
-                        std::stringstream ss;
-                        ss << current;
-                        text.setString(ss.str());
-                        sprites = random_sprites.getRandomSpritesWithRepeat(current);
-                        RandomlyPlaceSprites(window,sprites,sprite_region);
+                        if (show) {
+                          std::stringstream ss;
+                          ss << current;
+                          text.setString(ss.str());
+                        } else {
+                          text.setString("");
+                          current = rand() % max_smarties +1;
+                          sprites = random_sprites.getRandomSpritesWithRepeat(current);
+                          RandomlyPlaceSprites(window,sprites,sprite_region);
+                        }
+                        show = ! show;
                         break;
                     }
                 default:
