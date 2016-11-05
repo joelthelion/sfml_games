@@ -2,12 +2,13 @@
 #define music_h
 #include <SFML/Audio.hpp>
 
-//Repetitively play mario
+// Repetitively play mario
 class MarioPlayer {
-		public:
-				MarioPlayer(float volume=100.);
-		protected:
-				sf::Music music;
+public:
+  MarioPlayer(float volume = 100.);
+
+protected:
+  sf::Music music;
 };
 
 #endif
