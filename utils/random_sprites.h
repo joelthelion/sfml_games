@@ -1,5 +1,5 @@
 #ifndef random_sprites_h
-#define randm_sprites_h
+#define random_sprites_h
 
 #include <vector>
 #include <string>
