@@ -28,7 +28,8 @@ public:
   }
   void AddText(std::string word, std::vector<Text> &texts) {
     // cout << word << endl;
-    Text text(word, font);
+    // Text text(word, font);
+    Text text(String::fromUtf8(word.begin(), word.end()), font);
     text.setCharacterSize(72);
     text.setFillColor(colors[8]);
     texts.push_back(text);
@@ -84,8 +85,7 @@ int main() {
   // sprites.AddString("MAMAN");
   // sprites.AddString("PAPA");
   // sprites.AddString("JOEL");
-  std::vector<std::string> other_words = {"BEBE",    "VELO",   "PAPA",  "MAMAN",
-                                          "ANTONIN", "MAISON", "CRECHE"};
+  std::vector<std::string> other_words = {"ÉLOUAN", "JOËL", "MARINA", "RHINOCÉROS", "QUETZAL", "LAURA"};
   sprites.SetOtherWords(other_words);
   Music music;
   music.openFromFile("resources/mario.ogg");
