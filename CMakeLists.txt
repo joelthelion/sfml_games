@@ -4,9 +4,11 @@ project(sf1)
 set( CMAKE_EXPORT_COMPILE_COMMANDS 1 )
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -Wall -Wextra -Werror")
 
-find_package(SFML REQUIRED system window graphics network audio)
+find_package(SFML REQUIRED COMPONENTS system window graphics audio)
 find_package(Boost COMPONENTS system filesystem REQUIRED)
 include_directories(${Boost_INCLUDE_DIR})
+
+set(SFML_LIBRARIES sfml-system sfml-window sfml-graphics sfml-audio)
 
 subdirs(utils)
 include_directories(utils)
