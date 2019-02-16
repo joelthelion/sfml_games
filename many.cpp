@@ -55,7 +55,7 @@ int main() {
   Vector2f sprite_region = AdaptToWindowSize(1500, 1080, window);
   RandomlyPlaceSprites(window, sprites, sprite_region);
 
-  bool show = false;
+  bool show = true;
 
   // run the program as long as the window is open
   while (window.isOpen()) {
