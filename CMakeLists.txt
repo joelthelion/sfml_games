@@ -31,6 +31,9 @@ target_link_libraries(count utils ${SFML_LIBRARIES} ${Boost_LIBRARIES})
 add_executable(letters letters.cpp)
 target_link_libraries(letters ${SFML_LIBRARIES} ${Boost_LIBRARIES})
 
+add_executable(mirror mirror.cpp)
+target_link_libraries(mirror ${SFML_LIBRARIES} ${Boost_LIBRARIES})
+
 add_executable(words words.cpp)
 target_link_libraries(words ${SFML_LIBRARIES} ${Boost_LIBRARIES})
 
