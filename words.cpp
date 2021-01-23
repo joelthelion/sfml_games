@@ -14,7 +14,7 @@ namespace fs = ::boost::filesystem;
 
 class TextLoader {
 public:
-  const unsigned int N_OTHER_WORDS = 3;
+  const unsigned int N_OTHER_WORDS = 4;
   TextLoader()
       : colors({Color::Black, Color::White, Color::Blue, Color::Red,
                 Color::Yellow, Color::Magenta, Color::Cyan, Color(255, 128, 0),
@@ -39,9 +39,11 @@ public:
     assert(strings.size());
     assert(other_words.size());
     std::vector<sf::Text> output;
-    random_shuffle(strings.begin(), strings.end());
+    /* random_shuffle(strings.begin(), strings.end()); */
     random_shuffle(other_words.begin(), other_words.end());
-    AddText(strings[0], output);
+    for (const std::string& string : strings) {
+      AddText(string, output);
+    }
     for (unsigned int i = 0; i < N_OTHER_WORDS; i++)
       AddText(other_words[i], output);
     return output;
@@ -80,12 +82,12 @@ restart:
 int main() {
   TextLoader sprites;
   // sprites.AddString("ANTONINNNANTONIN");
-  // sprites.AddString("ANTONIN");
-  sprites.AddString("LISA");
-  // sprites.AddString("MAMAN");
-  // sprites.AddString("PAPA");
+  /* sprites.AddString("ANTONIN"); */
+  /* sprites.AddString("ÉLOUAN"); */
+  /* sprites.AddString("PAPA"); */
+  /* // sprites.AddString("MAMAN"); */
   // sprites.AddString("JOEL");
-  std::vector<std::string> other_words = {"ÉLOUAN", "JOËL", "MARINA", "RHINOCÉROS", "QUETZAL", "LAURA"};
+  std::vector<std::string> other_words = {"ÉLOUAN", "MAMAN", "ANTONIN", "LISA", "PAPA"};
   sprites.SetOtherWords(other_words);
   Music music;
   music.openFromFile("resources/mario.ogg");

@@ -12,7 +12,7 @@ using namespace sf;
 namespace fs = ::boost::filesystem;
 
 int main() {
-  const int MAX_N = 3;
+  const int MAX_N = 5;
   RandomSpriteLoader sprites;
   MarioPlayer mario;
   boost::filesystem::directory_iterator it;

@@ -29,7 +29,7 @@ int main() {
   Font font;
   font.loadFromFile("/usr/share/fonts/TTF/DejaVuSans.ttf");
   text.setFont(font);
-  text.setCharacterSize(150 * window.getSize().y / 1080);
+  text.setCharacterSize(100 * window.getSize().y / 1080);
   text.setFillColor(Color::Black);
   Vector2f pos = AdaptToWindowSize(1600, 193, window);
   text.setPosition(pos.x, pos.y);
@@ -45,7 +45,7 @@ int main() {
   // Texture texture;
   // texture.loadFromFile("resources/dice/1.png");
   pos = AdaptToWindowSize(1600, 540, window);
-  const int max_smarties = 200;
+  const int max_smarties = 1e3;
   int current = rand() % max_smarties + 1;
   // std::stringstream ss;
   // ss << current;

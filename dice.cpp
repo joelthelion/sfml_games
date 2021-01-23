@@ -43,7 +43,7 @@ Vector2f AdaptToWindowSize(int x, int y, const RenderWindow &window,
 }
 
 int main() {
-  const int MAX_N = 3;
+  const int MAX_N = 6;
   MarioPlayer mario(20.);
   // create the window
   // RenderWindow window(VideoMode(800, 600), "My window");
