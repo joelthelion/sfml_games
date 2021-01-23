@@ -25,6 +25,8 @@ void random_update(Text& text) {
   } else {
     text.setScale(1,1);
   }
+  text.setOrigin((text.getLocalBounds().width)/2.,
+      (text.getLocalBounds().height)/2.);
 }
 
 int main() {
@@ -47,9 +49,11 @@ int main() {
   text.setCharacterSize(196);
   text.setFont(font);
   text.setFillColor(Color::Black);
-  text.setOrigin(0,0);
-  text.setPosition((window.getSize().x-text.getLocalBounds().width)/2.,
-      (window.getSize().y - text.getLocalBounds().height)/2.);
+  /* text.setOrigin(0,0); */
+  text.setPosition((window.getSize().x)/2.,
+      (window.getSize().y)/2.);
+  /* text.setPosition((window.getSize().x-text.getLocalBounds().width)/2., */
+  /*     (window.getSize().y - text.getLocalBounds().height)/2.); */
   random_update(text);
 
   // run the program as long as the window is open
