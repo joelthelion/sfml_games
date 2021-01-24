@@ -13,8 +13,8 @@
 
 using namespace sf;
 std::default_random_engine generator;
-const String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-const String letters = "S53ZNCDL";
+const String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789";
+const String letters = "537SZNCDL";
 
 void random_update(Text& text) {
   std::uniform_int_distribution<int> idx_dist(0,letters.getSize()-1);
@@ -34,20 +34,17 @@ int main() {
   Music music;
   music.openFromFile("resources/mario.ogg");
   music.setLoop(true);
-  /* music.play(); */
+  music.play();
 
   // create the window
-  // RenderWindow window(VideoMode(800, 600), "My window");
-  RenderWindow window(VideoMode::getFullscreenModes()[0], "My window",
+  RenderWindow window(VideoMode::getFullscreenModes()[0], "Mirror letters",
                       Style::Fullscreen);
   window.setMouseCursorVisible(false);
 
-  /* std::vector<sf::Text> images = sprites.getRandomTexts(); */
-  /* RandomlyPlaceTexts(window, images); */
   Font font;
   font.loadFromFile("/usr/share/fonts/TTF/DejaVuSans.ttf");
   sf::Text alpha = sf::Text();
-  alpha.setCharacterSize(96);
+  alpha.setCharacterSize(72);
   alpha.setFont(font);
   alpha.setFillColor(Color::Black);
   alpha.setString(alphabet);

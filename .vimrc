@@ -2,5 +2,5 @@
 set softtabstop=2
 set shiftwidth=2
 set expandtab
-set makeprg=ninja\ -C\ build
+set makeprg=ninja\ -C\ build\ &&\ ./build/mirror
 
