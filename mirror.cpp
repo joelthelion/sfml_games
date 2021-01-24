@@ -13,7 +13,8 @@
 
 using namespace sf;
 std::default_random_engine generator;
-const String letters = "Spbqd53ZN";
+const String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const String letters = "S53ZNCDL";
 
 void random_update(Text& text) {
   std::uniform_int_distribution<int> idx_dist(0,letters.getSize()-1);
@@ -45,6 +46,12 @@ int main() {
   /* RandomlyPlaceTexts(window, images); */
   Font font;
   font.loadFromFile("/usr/share/fonts/TTF/DejaVuSans.ttf");
+  sf::Text alpha = sf::Text();
+  alpha.setCharacterSize(96);
+  alpha.setFont(font);
+  alpha.setFillColor(Color::Black);
+  alpha.setString(alphabet);
+  alpha.setPosition((window.getSize().x-alpha.getLocalBounds().width)/2., 0.);
   sf::Text text = sf::Text();
   text.setCharacterSize(196);
   text.setFont(font);
@@ -87,6 +94,7 @@ int main() {
 
     // draw everything here...
     window.draw(text);
+    window.draw(alpha);
 
     // end the current frame
     window.display();
