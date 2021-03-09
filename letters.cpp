@@ -8,7 +8,6 @@
 #include <vector>
 
 using namespace sf;
-namespace fs = ::boost::filesystem;
 
 class TextLoader {
 public:

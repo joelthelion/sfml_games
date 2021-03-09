@@ -14,7 +14,7 @@
 using namespace sf;
 std::default_random_engine generator;
 const String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789";
-const String letters = "537SZNCDL";
+const String letters = "69537JSZNCDL";
 
 void random_update(Text& text) {
   std::uniform_int_distribution<int> idx_dist(0,letters.getSize()-1);
